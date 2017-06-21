@@ -1,36 +1,87 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<!DOCTYPE html>
+<link async rel="import" href="../polymer/polymer-element.html" onload="xtal.elements.bootstrap()">
+<script>
+    var xtal;
+    (function (xtal) {
+        var elements;
+        (function (elements) {
+            function bootstrap() {
+                let xball = customElements.get('poly-prep');
+                if(xball) return xball;
+                class XtalBall extends Polymer.Element {
+                    _attachDom(dom) {
+                        if (dom) {
+                            return this.appendChild(dom);
+                        }
+                    }
+                }
+                customElements.define('poly-prep', XtalBall);
+                return XtalBall;
+            }
+            function debounce(callback, wait, context = this) {
+                //from https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
+                let timeout = null 
+                let callbackArgs = null
+                
+                const later = () => callback.apply(context, callbackArgs)
+                
+                return function() {
+                    callbackArgs = arguments
+                    clearTimeout(timeout)
+                    timeout = setTimeout(later, wait)
+                }
+            }
 
-<dom-module id="poly-prep">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
+            function downloadJSFilesInParallelButLoadInSequence(refs, callBack) {
+                //see https://www.html5rocks.com/en/tutorials/speed/script-loading/
+                const notLoadedYet = {};
+                const nonNullRefs = refs.filter(ref => ref !== null);
+                nonNullRefs.forEach(ref => {
+                    notLoadedYet[ref.src] = true;
+                });
+                nonNullRefs.forEach(ref => {
+                    const script = document.createElement('script');
+                    script.src = ref.src;
+                    script.async = false;
+                    script.onload = () => {
+                        //console.log(script.src + ' loaded');
+                        delete notLoadedYet[script.src];
+                        if (Object.keys(notLoadedYet).length === 0) {
+                            if (callBack)
+                                callBack();
+                        }
+                    };
+                    document.head.appendChild(script);
+                });
+            }
 
-  <script>
-    /**
-     * `poly-prep`
-     * Helper elements to load polymer elements asynchronously.
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class PolyPrep extends Polymer.Element {
-      static get is() { return 'poly-prep'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'poly-prep'
-          }
-        };
-      }
-    }
+            function InitMerge(superClass) {
+                return class extends superClass {
+                    init() {
+                        return new Promise((resolve, reject) =>{
+                            const jsonMergeInit = this.querySelector('json-merge[role="init"]');
+                            if(jsonMergeInit){
+                                customElements.whenDefined('json-merge').then(() =>{
+                                    const initObjs = jsonMergeInit.loadJSON();
+                                    if(initObjs){
+                                        initObjs.forEach(initObj => jsonMergeInit.mergeDeep(this, initObj))
+                                        
+                                    }
+                                    resolve();
+                                });
+                            }else{
+                                resolve();
+                            }
+                        });
 
-    window.customElements.define(PolyPrep.is, PolyPrep);
-  </script>
-</dom-module>
+                    }
+                }
+            }
+            elements.bootstrap = bootstrap;
+            elements.downloadJSFilesInParallelButLoadInSequence = downloadJSFilesInParallelButLoadInSequence;
+            elements.debounce = debounce;
+            elements.InitMerge = InitMerge;
+            
+        })(elements = xtal.elements || (xtal.elements = {}));
+    })(xtal || (xtal = {}));
+</script>

@@ -20,9 +20,22 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic poly-prep demo</h3>
+      <my-custom-component></my-custom-component>
       <demo-snippet>
         <template>
-          <poly-prep></poly-prep>
+          <script>
+            function initMyCustomComponent(){
+              class MyCustomComponent extends Polymer.Element{
+                static get is(){return 'my-custom-component';}
+                ready(){
+                  super.ready();
+                  this.innerHTML = 'Look Ma, no async errors';
+                }
+              }
+              customElements.define(MyCustomComponent.is, MyCustomComponent);
+            }
+            customElements.whenDefined('poly-prep').then(() => initMyCustomComponent());
+          </script>
         </template>
       </demo-snippet>
     </div>
