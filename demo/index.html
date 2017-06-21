@@ -8,10 +8,8 @@
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../../lazy-imports/lazy-imports-mixin.html">
-    <link rel="import" href="../poly-prep.html">
+    
+    <link  async rel="import" href="../poly-prep.html">
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -24,9 +22,15 @@
       <div>Note:  It is difficult to really demonstrate this working, 
         because as soon as I set the import to be asynchronous, the demo components throw errors.
       </div>
+      <poly-prep>
+        <template>
+          <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+          <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        </template>
+      </poly-prep>
       <my-custom-component></my-custom-component>
       <demo-snippet>
-        <template>
+        <!--<template>-->
           <script>
             function initMyCustomComponent(){
               class MyCustomComponent extends Polymer.Element{
@@ -40,7 +44,7 @@
             }
             customElements.whenDefined('poly-prep').then(() => initMyCustomComponent());
           </script>
-        </template>
+        <!--</template>-->
       </demo-snippet>
     </div>
   </body>

@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <link async rel="import" href="../polymer/polymer-element.html" onload="xtal.elements.bootstrap()">
+<!--<dom-module id="poly-prep">
+    <template>
+        i am here
+         <slot></slot>
+    </template>
+   
+</dom-module>-->
 <script>
     var xtal;
     (function (xtal) {
         var elements;
         (function (elements) {
             function bootstrap() {
-                let xball = customElements.get('poly-prep');
-                if(xball) return xball;
-                class XtalBall extends Polymer.Element {
-                    _attachDom(dom) {
-                        if (dom) {
-                            return this.appendChild(dom);
-                        }
+                let pp = customElements.get('poly-prep');
+                if(pp) return pp;
+                class PolyPrep extends Polymer.Element {
+                    // _attachDom(dom) {
+                    //     if (dom) {
+                    //         return this.appendChild(dom);
+                    //     }
+                    // }
+                    ready(){
+                        super.ready();
+                        const template = this.querySelector('template');
+                        var clone = document.importNode(template.content, true);
+                       const nd = this.appendChild(clone);
                     }
                 }
-                customElements.define('poly-prep', XtalBall);
-                return XtalBall;
+                customElements.define('poly-prep', PolyPrep);
+                return PolyPrep;
             }
             function debounce(callback, wait, context = this) {
                 //from https://gist.github.com/beaucharman/1f93fdd7c72860736643d1ab274fee1a
