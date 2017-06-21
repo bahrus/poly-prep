@@ -5,6 +5,8 @@ Helper elements to load polymer elements asynchronously.
 There are lots of errors that get thrown when async flag is used for polymer references.  See [examples here](https://github.com/Polymer/polymer/issues/4631).  Apparently, some of these are caused by a bug in chrome.  Perhaps when that bug
 is fixed, there will be no need for this component.
 
+
+
 ## Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your element locally.
