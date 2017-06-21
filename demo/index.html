@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
     <title>poly-prep demo</title>
-
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
     
@@ -19,18 +18,21 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic poly-prep demo</h3>
-      <div>Note:  It is difficult to really demonstrate this working, 
-        because as soon as I set the import to be asynchronous, the demo components throw errors.
-      </div>
       <poly-prep>
         <template>
-          <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-          <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+          <link async rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+          <link async rel="import" href="../../iron-demo-helpers/demo-snippet.html">
         </template>
       </poly-prep>
       <my-custom-component></my-custom-component>
       <demo-snippet>
-        <!--<template>-->
+        <template>
+          <!--
+          <link  async rel="import" href="../poly-prep.html">
+           <link async rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+           <link async rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+          -->
+          <my-custom-component></my-custom-component>
           <script>
             function initMyCustomComponent(){
               class MyCustomComponent extends Polymer.Element{
@@ -44,7 +46,7 @@
             }
             customElements.whenDefined('poly-prep').then(() => initMyCustomComponent());
           </script>
-        <!--</template>-->
+        </template>
       </demo-snippet>
     </div>
   </body>
