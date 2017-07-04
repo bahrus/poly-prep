@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link async rel="import" href="../polymer/polymer-element.html" onload="xtal.elements.bootstrap()">
+<link rel="import" href="../polymer/polymer-element.html">
 <!--<dom-module id="poly-prep">
     <template>
         i am here
@@ -13,9 +13,9 @@
         var elements;
         (function (elements) {
             function bootstrap() {
-                let pp = customElements.get('poly-prep');
+                let pp = customElements.get('poly-prep-sync');
                 if(pp) return pp;
-                class PolyPrep extends Polymer.Element {
+                class PolyPrepSync extends Polymer.Element {
                     // _attachDom(dom) {
                     //     if (dom) {
                     //         return this.appendChild(dom);
@@ -29,7 +29,7 @@
                         const nd = this.appendChild(clone);
                     }
                 }
-                customElements.define('poly-prep', PolyPrep);
+                customElements.define('poly-prep-sync', PolyPrepSync);
                 return PolyPrep;
             }
             function debounce(callback, wait, context = this) {
@@ -91,11 +91,11 @@
                     }
                 }
             }
-            elements.bootstrap = bootstrap;
+            elements.syncBootstrap = bootstrap;
             elements.downloadJSFilesInParallelButLoadInSequence = downloadJSFilesInParallelButLoadInSequence;
             elements.debounce = debounce;
             elements.InitMerge = InitMerge;
-            
+            bootstrap();
         })(elements = xtal.elements || (xtal.elements = {}));
     })(xtal || (xtal = {}));
 </script>
