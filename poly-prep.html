@@ -15,6 +15,16 @@
             function bootstrap() {
                 let pp = customElements.get('poly-prep');
                 if(pp) return pp;
+                /**
+                * `poly-prep`
+                * Load contents inside the template tag of poly-prep only after polymer-element.html has loaded.
+                * `full-poly-prep` won't load the contents until polymer.html has loaded.
+                *  This allows components that assume the polymer library is already loaded, to be loaded asynchronously.
+                *
+                * @customElement
+                * @polymer
+                * @demo demo/index.html
+                */
                 class PolyPrep extends Polymer.Element {
                     // _attachDom(dom) {
                     //     if (dom) {
