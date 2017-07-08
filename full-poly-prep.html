@@ -26,7 +26,16 @@
                         const template = this.querySelector('template');
                         if(!template) return;
                         var clone = document.importNode(template.content, true);
-                        const nd = this.appendChild(clone);
+                        var childNodes = clone.childNodes;
+                        for(var i = 0, ii = childNodes.length; i < ii; i++){
+                            var childNode = childNodes[i];
+                            if(childNode.tagName === "LINK"){
+                                var href = childNode.getAttribute('href');
+                                var resolvedHref = this.resolveUrl(href);
+                                Polymer.importHref(resolvedHref);
+                            }
+                        }
+                        //const nd = this.appendChild(clone);
                     }
                 }
                 customElements.define('full-poly-prep', FullPolyPrep);
