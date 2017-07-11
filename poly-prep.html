@@ -36,7 +36,21 @@
                         const template = this.querySelector('template');
                         if(!template) return;
                         var clone = document.importNode(template.content, true);
-                        const nd = this.appendChild(clone);
+                        var childNodes = clone.childNodes;
+                        setTimeout(() =>{
+                            for(var i = 0, ii = childNodes.length; i < ii; i++){
+                                var childNode = childNodes[i];
+                                if(childNode.tagName === "LINK"){
+                                    var href = childNode.getAttribute('href');
+                                    var resolvedHref = this.resolveUrl(href);
+                                    var link = document.createElement('link');
+                                    link.setAttribute('rel', 'import');
+                                    link.setAttribute('href', resolvedHref);
+                                    document.head.appendChild(link);
+                                    //Polymer.importHref(resolvedHref);
+                                }
+                            }
+                        }, 50);
                     }
                 }
                 customElements.define('poly-prep', PolyPrep);

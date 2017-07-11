@@ -27,14 +27,17 @@
                         if(!template) return;
                         var clone = document.importNode(template.content, true);
                         var childNodes = clone.childNodes;
-                        for(var i = 0, ii = childNodes.length; i < ii; i++){
-                            var childNode = childNodes[i];
-                            if(childNode.tagName === "LINK"){
-                                var href = childNode.getAttribute('href');
-                                var resolvedHref = this.resolveUrl(href);
-                                Polymer.importHref(resolvedHref);
+                        setTimeout(() =>{
+                            for(var i = 0, ii = childNodes.length; i < ii; i++){
+                                var childNode = childNodes[i];
+                                if(childNode.tagName === "LINK"){
+                                    var href = childNode.getAttribute('href');
+                                    var resolvedHref = this.resolveUrl(href);
+                                    Polymer.importHref(resolvedHref);
+                                }
                             }
-                        }
+                        }, 50);
+                        
                         //const nd = this.appendChild(clone);
                     }
                 }
